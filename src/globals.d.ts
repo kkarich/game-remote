@@ -1,0 +1,3 @@
+interface ScaleDrone {
+    test: string;
+   }
