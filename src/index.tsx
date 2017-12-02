@@ -4,9 +4,11 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import Main from './views/main';
-import NewGame from './views/newGame';
-import Join from './views/join';
+
+import Main from './views/Main';
+import NewGame from './views/NewGame';
+import Join from './views/Join';
+
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
