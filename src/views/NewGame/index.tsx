@@ -13,7 +13,9 @@ class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
     }
 
     this.connectorManager = new ConnectorManager(this.state.roomKey);
-    this.connectorManager.connector('1');
+    this.connectorManager.on('start', (data: {}) => {
+      this.props.history.push('/game');
+    })
   }
   render() {
     return (

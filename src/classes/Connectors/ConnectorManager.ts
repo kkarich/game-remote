@@ -2,15 +2,19 @@ import { applyMixins } from '../helpers';
 import Socket from '../Socket';
 import GameConnector from './GameConnector';
 import Reciever from './Reciever';
+import Observable from './Observable';
+import Player from '../Player/Player';
 
-class ConnectorManager implements Reciever{
+class ConnectorManager implements Reciever, Observable{
     socket: any;
     reciever: any;
     connection: any;
+    observers: {};
     connectors: {};
     constructor(private roomKey: string) {
         this.socket = new Socket();
         this.connectors = {};
+        this.observers = {};
 
         this.socket.on('open', (error: any) => {
             this.initReciever('observable-' + this.roomKey);
@@ -26,11 +30,22 @@ class ConnectorManager implements Reciever{
 
     handleNewMember(member: any) {
         let connector = new GameConnector(this.socket, member.id);
-        connector.on('message', (data:any) => {
-            console.log('data', data);
+        new Player(connector);
+        connector.on('start', (data:any) => {
+            this.handleStartGame(data);
         });
         this.connectors[member.id] = connector;
         connector.send({ action: 'connected' });
+    }
+
+    handleStartGame(data: {}) {
+        Object.keys(this.connectors).forEach(key => {
+            let connector = this.connectors[key];
+            connector.send({
+                action: 'start'
+            })
+        });
+        this.notifyObservers('start', data);
     }
 
     handleIncomingData(data: any, member: any) {
@@ -43,7 +58,11 @@ class ConnectorManager implements Reciever{
     // Reciever
     registerListener: () => void;
     initReciever: (connectionId: string) => void;
+    // Observable
+    on: (action: string, callback: Function) => void;
+    off: (action: string, callback: Function) => void;
+    notifyObservers: (action: string, data: any) => void;
 }
 
-applyMixins(ConnectorManager, [Reciever]);
+applyMixins(ConnectorManager, [Reciever, Observable]);
 export default ConnectorManager;

@@ -20,7 +20,7 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Segment raised>
-            Controller
+            Game
           </Segment>
         </Grid.Column>
       </Grid>
