@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header, Grid, Segment } from 'semantic-ui-react';
 import ConnectorManager from '../../classes/Connectors/ConnectorManager';
+import GlobalState from '../../classes/State';
 
 class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
   connection: any;
@@ -14,6 +15,7 @@ class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
 
     this.connectorManager = new ConnectorManager(this.state.roomKey);
     this.connectorManager.on('start', (data: {}) => {
+      GlobalState.set({ 'connectorManager': this.connectorManager });
       this.props.history.push('/game');
     })
   }

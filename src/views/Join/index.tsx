@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Form, Grid, Button, Input, Segment } from 'semantic-ui-react';
-import Player from '../../classes/Player/PlayerProxy';
+import Player from '../../classes/Player/Player';
 import Socket from '../../classes/Socket';
 import ControllerConnector from '../../classes/Connectors/ControllerConnector';
+import { controllerProxyFactory } from '../../classes/Controller/ControllerFactories';
+import GlobalState from '../../classes/State';
 
 class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
   connector: any;
@@ -28,7 +30,7 @@ class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
     this.connector.joinGame(this.state.value).then(() => {
       this.setState({ connected: true });
 
-      this.player = new Player(this.connector);
+      this.player = new Player(this.connector, controllerProxyFactory);
 
     });
   }
@@ -37,6 +39,7 @@ class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
       action: 'start'
     });
     this.connector.on('start', () => {
+      GlobalState.set({ 'player': this.player });
       this.props.history.push('/controller');
     });
   }

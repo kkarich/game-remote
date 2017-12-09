@@ -1,9 +1,9 @@
-import Controller from '../Controller/Controller';
+import { ControllerFactory } from '../Controller/ControllerFactories';
 
 class Player {
     controller: any;
-    constructor(connector: any) {
-        this.controller = new Controller(connector);
+    constructor(connector: any, controllerFactory: ControllerFactory) {
+        this.controller = controllerFactory.createController(connector);
     }
 }
 

@@ -4,6 +4,7 @@ import GameConnector from './GameConnector';
 import Reciever from './Reciever';
 import Observable from './Observable';
 import Player from '../Player/Player';
+import { controllerFactory } from '../Controller/ControllerFactories';
 
 class ConnectorManager implements Reciever, Observable{
     socket: any;
@@ -30,7 +31,8 @@ class ConnectorManager implements Reciever, Observable{
 
     handleNewMember(member: any) {
         let connector = new GameConnector(this.socket, member.id);
-        new Player(connector);
+        new Player(connector,controllerFactory);
+        
         connector.on('start', (data:any) => {
             this.handleStartGame(data);
         });

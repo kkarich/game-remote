@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Grid, Segment } from 'semantic-ui-react';
+import GlobalState from '../../classes/State';
 
 class GameView extends React.Component<RouteComponentProps<{}>, any> {
+  connectorManager: any;
   constructor(props: any) {
     super(props);
-    this.state = {
-      connected: false,
-      value: ''
-    };
+    this.connectorManager = GlobalState.get('connectorManager');
+    if (!this.connectorManager) {
+        this.props.history.push('/newgame');
+    }
   }
 
   render() {

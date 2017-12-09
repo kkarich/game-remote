@@ -5,15 +5,13 @@ class ButtonProxy implements ButtonInterface{
 
     pressDown() {
         this.connector.send({
-            action: 'button.pressDown',
-            key: this.key
+            action: `button.${this.key}.pressDown`
         })
     }
 
     pressUp() {
         this.connector.send({
-            action: 'button.pressUp',
-            key: this.key
+            action: `button.${this.key}.pressUp`
         })
     }
 }
