@@ -3,14 +3,17 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Grid, Segment } from 'semantic-ui-react';
 import GlobalState from '../../classes/State';
 
+import invaders from '../../games/invaders'
+
 class GameView extends React.Component<RouteComponentProps<{}>, any> {
   connectorManager: any;
   constructor(props: any) {
     super(props);
     this.connectorManager = GlobalState.get('connectorManager');
-    if (!this.connectorManager) {
-        this.props.history.push('/newgame');
-    }
+    // if (!this.connectorManager) {
+    //     this.props.history.push('/newgame');
+    // }
+    invaders();
   }
 
   render() {
@@ -21,8 +24,7 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
         verticalAlign="middle"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Segment raised>
-            Game
+          <Segment id='game-container'>
           </Segment>
         </Grid.Column>
       </Grid>
