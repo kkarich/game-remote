@@ -31,9 +31,11 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
     renderButton(key: string) {
         return (
             <Button 
-                onMouseDown = {() => {this.handleMouseDown(key)}} 
+                onMouseDown = {() => {this.handleMouseDown(key)}}
+                onTouchStart = {() => {this.handleMouseDown(key)}}
                 onMouseUp = {() => {this.handleMouseUp(key)}}
                 onMouseLeave = {() => {this.handleMouseUp(key)}}
+                onTouchEnd = {() => {this.handleMouseUp(key)}}
                 fluid> {key.toUpperCase()}
             </Button>
         )
