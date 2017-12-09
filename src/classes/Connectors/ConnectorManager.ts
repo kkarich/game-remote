@@ -12,10 +12,12 @@ class ConnectorManager implements Reciever, Observable{
     connection: any;
     observers: {};
     connectors: {};
+    players: any[];
     constructor(private roomKey: string) {
         this.socket = new Socket();
         this.connectors = {};
         this.observers = {};
+        this.players = [];
 
         this.socket.on('open', (error: any) => {
             this.initReciever('observable-' + this.roomKey);
@@ -31,7 +33,7 @@ class ConnectorManager implements Reciever, Observable{
 
     handleNewMember(member: any) {
         let connector = new GameConnector(this.socket, member.id);
-        new Player(connector,controllerFactory);
+        this.players.push(new Player(connector,controllerFactory));
         
         connector.on('start', (data:any) => {
             this.handleStartGame(data);

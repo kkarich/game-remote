@@ -23,7 +23,7 @@ class ControllerFactory implements ControllerFactoryInterFace{
     createButton(key: string, connector: any) {
         let button = new Button(key);
         new ButtonConnector(button, connector);
-        return 
+        return button;
     }
 }
 

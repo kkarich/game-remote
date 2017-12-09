@@ -10,10 +10,11 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
   constructor(props: any) {
     super(props);
     this.connectorManager = GlobalState.get('connectorManager');
-    // if (!this.connectorManager) {
-    //     this.props.history.push('/newgame');
-    // }
-    invaders();
+    if (!this.connectorManager) {
+        this.props.history.push('/newgame');
+    } else {
+      invaders(this.connectorManager.players);
+    }
   }
 
   render() {
@@ -23,7 +24,7 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
         style={{ height: '100%' }}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: 450 }}>
+        <Grid.Column>
           <Segment id='game-container'>
           </Segment>
         </Grid.Column>
