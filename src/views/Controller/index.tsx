@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Grid, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import GlobalState from '../../classes/State';
 import ControlMap from '../../classes/ControlMap';
 
@@ -17,13 +17,11 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
     }
 
     handlePressDown(key: string) {
-        // this.player.controller.button(key).pressDown();
-        console.log("PRESS DOWN: ", key);
+        this.player.controller.button(key).pressDown();
     }
 
     handlePressUp(key: string) {
-        // this.player.controller.button(key).pressUp();
-        console.log("PRESS UP: ", key);
+        this.player.controller.button(key).pressUp();
     }
 
     renderButtons() {
@@ -45,17 +43,8 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
     render() {
         return (
             <Container 
-                style={{ height: '100%' }}>
-                <Grid
-                    textAlign="center"
-                    style={{ height: '100%' }}
-                    verticalAlign="middle"
-                >
-                    <Grid.Column 
-                        style={{ background: '#2A2A2A', height: '100%' }}>
-                            {this.renderButtons()}
-                    </Grid.Column>
-                </Grid>
+                style={{ background: '#2A2A2A', height: '100%' }}>
+                    {this.renderButtons()}
             </Container>
         );
     }
