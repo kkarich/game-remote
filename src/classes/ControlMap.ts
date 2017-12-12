@@ -1,13 +1,25 @@
 export default {
     buttons: [
         {
-            key: 'a'
+            key: 'a',
+            position: {
+                right: '5%',
+                bottom: '5%'
+            }
         },
         {
-            key: 'b'
+            key: 'b',
+            position: {
+                left: '10%',
+                top: '50%'
+            }
         },
         {
-            key: 'c'
+            key: 'c',
+            position: {
+                left: '25%',
+                top: '50%'
+            }
         }
     ]
 }
