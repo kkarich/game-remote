@@ -9,7 +9,7 @@ class Button extends React.Component<any, any> {
             active: false
         }
         this.key = props.buttonConfig.key;
-        this.style = props.buttonConfig.position;
+        this.style = Object.assign({},props.buttonConfig.position, props.buttonConfig.size);
     }
 
     onPressDown() {

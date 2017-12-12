@@ -5,6 +5,10 @@ export default {
             position: {
                 right: '5%',
                 bottom: '5%'
+            },
+            size: {
+                width: '10vw',
+                height: '10vw'
             }
         },
         {
@@ -12,6 +16,10 @@ export default {
             position: {
                 left: '10%',
                 top: '50%'
+            },
+            size: {
+                width: '10vw',
+                height: '10vw'
             }
         },
         {
@@ -19,6 +27,10 @@ export default {
             position: {
                 left: '25%',
                 top: '50%'
+            },
+            size: {
+                width: '10vw',
+                height: '10vw'
             }
         }
     ]
