@@ -1,8 +1,8 @@
 class Controller {
-    constructor(private buttons: {}) {}
+    constructor(private controls: {}) {}
 
-    button(key: string) {
-        return this.buttons[key];
+    control(key: string) {
+        return this.controls[key];
     }
 }
 

@@ -1,23 +1,42 @@
 import Button from '../Button/Button';
 import ButtonConnector from '../Button/ButtonConnector';
 import ButtonProxy from '../Button/ButtonProxy';
+import Joystick from '../Controls/Joystick/Joystick';
+import JoystickConnector from '../Controls/Joystick/JoystickConnector';
+import JoystickProxy from '../Controls/Joystick/JoystickProxy';
+
 import Controller from './Controller';
 import ControlMap from '../ControlMap';
 
 interface ControllerFactoryInterFace {
     createController: Function;
-    createButton: Function
+    createButton: Function;
+    createJoystick: Function;
 }
 
 class ControllerFactory implements ControllerFactoryInterFace{
     createController(connector: any) {
-        let buttons = {};
+        let controls = {};
         
-        ControlMap.buttons.forEach((buttonData) => {
-            buttons[buttonData.key] = this.createButton(buttonData.key, connector);
+        ControlMap.controls.forEach((controlConfig) => {
+            let control = this.createControl(controlConfig, connector);
+            if (control) {
+                controls[controlConfig.key] = control;
+            }
         });
 
-        return new Controller(buttons);
+        return new Controller(controls);
+    }
+
+    createControl(controlConfig: any, connector: any) {
+        switch (controlConfig.type) {
+            case 'button':
+                return this.createButton(controlConfig.key, connector);
+            case 'joystick':
+                return this.createJoystick(controlConfig.key, connector);
+            default:
+                return false;
+        }
     }
 
     createButton(key: string, connector: any) {
@@ -25,11 +44,20 @@ class ControllerFactory implements ControllerFactoryInterFace{
         new ButtonConnector(button, connector);
         return button;
     }
+
+    createJoystick(key: string, connector: any) {
+        let joystick = new Joystick(key);
+        new JoystickConnector(joystick, connector);
+        return joystick;
+    }
 }
 
 class ControllerProxyFactory extends ControllerFactory{
     createButton(key: string, connector: any) {
         return new ButtonProxy(key, connector);
+    }
+    createJoystick(key: string, connector: any) {
+        return new JoystickProxy(key, connector);
     }
 }
 

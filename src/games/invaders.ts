@@ -146,15 +146,18 @@ export default function (players: any[]) {
             //  Reset the player, then check for movement keys
             player.body.velocity.setTo(0, 0);
 
-            if (mainPlayer.controller.button('b').isDown) {
-                player.body.velocity.x = -200;
-            }
-            else if (mainPlayer.controller.button('c').isDown) {
-                player.body.velocity.x = 200;
+            let joystick = mainPlayer.controller.control('b');
+            
+            if (joystick.force > 0) {
+                if (joystick.degree >= 90 && joystick.degree < 270) {
+                    player.body.velocity.x = -200;
+                } else {
+                    player.body.velocity.x = 200;
+                }
             }
 
             //  Firing?
-            if (mainPlayer.controller.button('a').isDown) {
+            if (mainPlayer.controller.control('a').isDown) {
                 fireBullet();
             }
 
