@@ -8,14 +8,14 @@ import { controllerProxyFactory } from '../../classes/Controller/ControllerFacto
 import GlobalState from '../../classes/State';
 
 class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
-  connector: any;
-  player: any;
-  constructor(props: any) {
+  connector: ControllerConnector;
+  player: Player;
+  constructor(props: RouteComponentProps<{}>) {
     super(props);
     let socket: any = new Socket();
     socket.on('open', () => {
       this.connector = new ControllerConnector(socket);
-    })
+    });
     this.state = {
       connected: false,
       value: ''
@@ -46,14 +46,14 @@ class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
 
   renderSection() {
     if (this.state.connected) {
-      return <Button onClick = {() => {this.startGame()}} fluid>Start Game</Button>
+      return <Button onClick={() => { this.startGame(); }} fluid>Start Game</Button>;
     } else {
       return (
         <Form size="large" onSubmit={(e) => this.handleSubmit(e)}>
           <Input id="incoming" value={this.state.value} onChange={(e) => this.handleChange(e)} />
           <Button type="submit" fluid>Send</Button>
         </Form>
-      )
+      );
     }
   }
 
@@ -66,7 +66,7 @@ class NewGameView extends React.Component<RouteComponentProps<{}>, any> {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Segment raised>
-              {this.renderSection()}
+            {this.renderSection()}
           </Segment>
         </Grid.Column>
       </Grid>

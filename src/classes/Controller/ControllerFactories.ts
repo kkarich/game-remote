@@ -1,9 +1,7 @@
-import Button from '../Button/Button';
-import ButtonConnector from '../Button/ButtonConnector';
-import ButtonProxy from '../Button/ButtonProxy';
+import Button from '../Controls/Button/Button';
 import Joystick from '../Controls/Joystick/Joystick';
-import JoystickConnector from '../Controls/Joystick/JoystickConnector';
-import JoystickProxy from '../Controls/Joystick/JoystickProxy';
+import ControlConnector from '../Controls/ControlConnector';
+import ControlTransmitter from '../Controls/ControlTransmitter';
 
 import Controller from './Controller';
 import ControlMap from '../ControlMap';
@@ -14,7 +12,7 @@ interface ControllerFactoryInterFace {
     createJoystick: Function;
 }
 
-class ControllerFactory implements ControllerFactoryInterFace{
+class ControllerFactory implements ControllerFactoryInterFace {
     createController(connector: any) {
         let controls = {};
         
@@ -41,27 +39,30 @@ class ControllerFactory implements ControllerFactoryInterFace{
 
     createButton(key: string, connector: any) {
         let button = new Button(key);
-        new ButtonConnector(button, connector);
+        ControlConnector.registerListener(button, connector);
         return button;
     }
 
     createJoystick(key: string, connector: any) {
         let joystick = new Joystick(key);
-        new JoystickConnector(joystick, connector);
+        ControlConnector.registerListener(joystick, connector);
         return joystick;
     }
 }
 
-class ControllerProxyFactory extends ControllerFactory{
+class ControllerProxyFactory extends ControllerFactory {
     createButton(key: string, connector: any) {
-        return new ButtonProxy(key, connector);
+        let button = new Button(key);
+        ControlTransmitter.registerTransmitter(button, connector);
+        return button;
     }
     createJoystick(key: string, connector: any) {
-        return new JoystickProxy(key, connector);
+        let joystick = new Joystick(key);
+        ControlTransmitter.registerTransmitter(joystick, connector);
+        return joystick;
     }
 }
 
 let controllerFactory = new ControllerFactory();
 let controllerProxyFactory = new ControllerProxyFactory();
-export { ControllerFactory, controllerFactory, controllerProxyFactory } ;
-
+export { ControllerFactory, controllerFactory, controllerProxyFactory };

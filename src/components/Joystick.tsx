@@ -1,16 +1,16 @@
 import * as React from 'react';
-import * as Nipplejs from 'nipplejs'
+import * as Nipplejs from 'nipplejs';
 import { generateStyles } from '../classes/helpers';
 
 class Joystick extends React.Component<any, any> {
     key: string;
     style: any;
-    joystick: any
+    joystick: any;
     constructor(props: any) {
         super(props);
         this.state = {
             active: false
-        }
+        };
         this.key = props.joystickConfig.key;
         this.style = generateStyles(props.joystickConfig);
     }
@@ -40,17 +40,17 @@ class Joystick extends React.Component<any, any> {
                 case 'move':
                     this.onMove(data.angle.degree, data.force);
                     break;
-            
+
                 default:
                     break;
             }
         });
     }
-    
+
     onStart() {
         this.props.onStart(this.key);
     }
-    
+
     onStop() {
         this.props.onStop(this.key);
     }

@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Grid, Segment } from 'semantic-ui-react';
 import GlobalState from '../../classes/State';
 
-import invaders from '../../games/invaders'
+import invaders from '../../games/invaders';
 
 class GameView extends React.Component<RouteComponentProps<{}>, any> {
   connectorManager: any;
@@ -25,8 +25,7 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
         verticalAlign="middle"
       >
         <Grid.Column>
-          <Segment id='game-container'>
-          </Segment>
+          <Segment id="game-container"/>
         </Grid.Column>
       </Grid>
     );

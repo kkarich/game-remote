@@ -9,12 +9,13 @@ import ControllerJoystick from '../../components/Joystick';
 
 class GameView extends React.Component<RouteComponentProps<{}>, any> {
     player: any;
+    joystick: any;
     constructor(props: any) {
         super(props);
         this.player = GlobalState.get('player');
-        // if (!this.player) {
-        //     this.props.history.push('/join');
-        // }
+        if (!this.player) {
+            this.props.history.push('/join');
+        }
     }
 
     handlePressDown(key: string) {
@@ -24,11 +25,11 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
     handlePressUp(key: string) {
         this.player.controller.control(key).pressUp();
     }
-    
+
     handleStart(key: string) {
         this.player.controller.control(key).start();
     }
-    
+
     handleStop(key: string) {
         this.player.controller.control(key).stop();
     }
@@ -58,24 +59,26 @@ class GameView extends React.Component<RouteComponentProps<{}>, any> {
         return (
             <ControllerButton
                 buttonConfig={buttonConfig}
-                onPressDown={(key: string) => { this.handlePressDown(key) }}
-                onPressUp={(key: string) => { this.handlePressUp(key) }}
-                fluid />
-        )
+                onPressDown={(key: string) => { this.handlePressDown(key); }}
+                onPressUp={(key: string) => { this.handlePressUp(key); }}
+                fluid 
+            />
+        );
     }
 
     renderJoyStick(joystickConfig: any) {
-        return <ControllerJoystick
+        return (
+        <ControllerJoystick
             joystickConfig={joystickConfig}
-            onStart={(key: string) => { this.handleStart(key) }}
-            onStop={(key: string) => { this.handleStop(key) }}
-            onMove={(key: string, degree: number, force: number) => { this.handleMove(key, degree, force) }} />;
+            onStart={(key: string) => { this.handleStart(key); }}
+            onStop={(key: string) => { this.handleStop(key); }}
+            onMove={(key: string, degree: number, force: number) => { this.handleMove(key, degree, force); }} 
+        />);
     }
 
     render() {
         return (
-            <Container
-                style={{ background: '#2A2A2A', height: '100%' }}>
+            <Container style={{ background: '#2A2A2A', height: '100%' }}>
                 {this.renderControls()}
             </Container>
         );

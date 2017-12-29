@@ -15,7 +15,7 @@ export function generateStyles(controlMap: any) {
         width: controlMap.size.diameter + 'vw',
         height: controlMap.size.diameter + 'vw',
         lineHeight: controlMap.size.diameter + 'vw',
-    }
+    };
 }
 
 export function debounce(time: number) {

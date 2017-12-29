@@ -15,11 +15,12 @@ class ObservableConnector {
         return observers;
     }
 
-    notifyObservers(eventName: string, data: {}) {
+    notifyObservers(eventName: string, data: any) {
         if (!this.observers[eventName]) {
             return;
         }
         this.observers[eventName].forEach((callback: Function) => {
+            delete data.action;
             callback(data);
         });
     }

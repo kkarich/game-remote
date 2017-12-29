@@ -1,5 +1,10 @@
 export default function (players: any[]) {
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-container', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-container', {
+            preload: preload,
+            create: create,
+            update: update,
+            render: render
+        });
 
     function preload() {
         game.stage.disableVisibilityChange = true;
@@ -116,7 +121,8 @@ export default function (players: any[]) {
         aliens.x = 100;
         aliens.y = 50;
 
-        //  All this does is basically start the invaders moving. Notice we're moving the Group they belong to, rather than the invaders directly.
+        //  All this does is basically start the invaders moving. 
+        // Notice we're moving the Group they belong to, rather than the invaders directly.
         var tween = game.add.tween(aliens).to({ x: 200 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
         //  When the tween loops it calls descend
@@ -146,10 +152,11 @@ export default function (players: any[]) {
             //  Reset the player, then check for movement keys
             player.body.velocity.setTo(0, 0);
 
+            let button = mainPlayer.controller.control('a');
             let joystick = mainPlayer.controller.control('b');
-            
-            if (joystick.force > 0) {
-                if (joystick.degree >= 90 && joystick.degree < 270) {
+
+            if (joystick.getState().force > 0) {
+                if (joystick.getState().degree >= 90 && joystick.getState().degree < 270) {
                     player.body.velocity.x = -200;
                 } else {
                     player.body.velocity.x = 200;
@@ -157,7 +164,7 @@ export default function (players: any[]) {
             }
 
             //  Firing?
-            if (mainPlayer.controller.control('a').isDown) {
+            if (button.getState().isDown) {
                 fireBullet();
             }
 
@@ -196,15 +203,15 @@ export default function (players: any[]) {
         explosion.reset(alien.body.x, alien.body.y);
         explosion.play('kaboom', 30, false, true);
 
-        if (aliens.countLiving() == 0) {
+        if (aliens.countLiving() === 0) {
             score += 1000;
             scoreText.text = scoreString + score;
 
             enemyBullets.callAll('kill');
-            stateText.text = " You Won, \n Click to restart";
+            stateText.text = ' You Won, \n Click to restart';
             stateText.visible = true;
 
-            //the "click to restart" handler
+            // the "click to restart" handler
             game.input.onTap.addOnce(restart);
         }
 
@@ -230,10 +237,10 @@ export default function (players: any[]) {
             player.kill();
             enemyBullets.callAll('kill');
 
-            stateText.text = " GAME OVER \n Click to restart";
+            stateText.text = ' GAME OVER \n Click to restart';
             stateText.visible = true;
 
-            //the "click to restart" handler
+            // the "click to restart" handler
             game.input.onTap.addOnce(restart);
         }
 
@@ -251,7 +258,6 @@ export default function (players: any[]) {
             // put every living enemy in an array
             livingEnemies.push(alien);
         });
-
 
         if (enemyBullet && livingEnemies.length > 0) {
 
@@ -289,15 +295,15 @@ export default function (players: any[]) {
 
         //  A new level starts
 
-        //resets the life count
+        // resets the life count
         lives.callAll('revive');
         //  And brings the aliens back from the dead :)
         aliens.removeAll();
         createAliens();
 
-        //revives the player
+        // revives the player
         player.revive();
-        //hides the text
+        // hides the text
         stateText.visible = false;
 
     }

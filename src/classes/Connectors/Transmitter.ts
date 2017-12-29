@@ -6,7 +6,7 @@ class Transmitter {
         this.socket.publish({
             room: this.connectedId,
             message: message
-        })
+        });
     }
 }
 

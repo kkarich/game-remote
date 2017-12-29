@@ -7,7 +7,7 @@ class Button extends React.Component<any, any> {
         super(props);
         this.state = {
             active: false
-        }
+        };
         this.key = props.buttonConfig.key;
         this.style = generateStyles(props.buttonConfig);
     }
@@ -24,13 +24,14 @@ class Button extends React.Component<any, any> {
 
     render() {
         return (
-            <div style={this.style}
-                className={"button " + (this.state.active ? 'active' : '')}
-                onMouseDown={() => { this.onPressDown() }}
-                onTouchStart={() => { this.onPressDown() }}
-                onMouseUp={() => { this.onPressUp() }}
-                onMouseLeave={() => { this.onPressUp() }}
-                onTouchEnd={() => { this.onPressUp() }}
+            <div 
+                style={this.style}
+                className={'button ' + (this.state.active ? 'active' : '')}
+                onMouseDown={() => { this.onPressDown(); }}
+                onTouchStart={() => { this.onPressDown(); }}
+                onMouseUp={() => { this.onPressUp(); }}
+                onMouseLeave={() => { this.onPressUp(); }}
+                onTouchEnd={() => { this.onPressUp(); }}
             > {this.key.toUpperCase()}
             </div>
         );

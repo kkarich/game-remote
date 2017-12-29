@@ -4,10 +4,21 @@ import Transmitter from './Transmitter';
 import Reciever from './Reciever';
 
 class ControllerConnector implements Transmitter, Reciever, Observable {
+    // ControllerConnector
     socket: any;
     connectedId: any;
     connection: any;
     observers: {};
+    // Transmitter
+    send: (message: any) => void;
+    // Reciever
+    initReciever: (connectionId: string) => void;
+    registerListener: () => void;
+    // Observable
+    on: (action: string, callback: Function) => void;
+    off: (action: string, callback: Function) => void;
+    notifyObservers: (action: string, data: any) => void;
+
     constructor(socket: any) {
         this.observers = {};
         this.socket = socket;
@@ -31,16 +42,6 @@ class ControllerConnector implements Transmitter, Reciever, Observable {
     handleIncomingData(data: any, error: any) {
         this.notifyObservers(data.action, data);
     }
-
-    // Transmitter
-    send: (message: any) => void;
-    // Reciever
-    initReciever: (connectionId: string) => void;
-    registerListener: () => void;
-    // Observable
-    on: (action: string, callback: Function) => void;
-    off: (action: string, callback: Function) => void;
-    notifyObservers: (action: string, data: any) => void;
 }
 
 applyMixins(ControllerConnector, [Transmitter, Reciever, Observable]);
